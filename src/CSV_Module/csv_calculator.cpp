@@ -2,7 +2,7 @@
 #include "../Utilities/auxiliary_functionality.h"
 
 using namespace std;
-#include <iostream>
+
 void CSVCalculator::Calculate(CSVContainer& csvContainer) {
     for (size_t i = 1; i < csvContainer._cells.size(); i++) {
         for (size_t j = 1; j < csvContainer._cells[i].size(); j++) {
@@ -22,9 +22,7 @@ void CSVCalculator::CalculateCellValue(CSVCell& cell, CSVContainer& csvContainer
 
     cell.isVisited = true;
 
-    //cout << "BEFORE " << cell.Name() << endl;
     const auto cellExprWithoutSpaces = WithoutSpaces(cell.expression);
-
 
     const auto opPos = cellExprWithoutSpaces.find_first_of("+-*/");
     const auto leftStr = cellExprWithoutSpaces.substr(1, opPos - 1); // С 1 индекса, чтобы не брать "=" из формулы
@@ -35,7 +33,6 @@ void CSVCalculator::CalculateCellValue(CSVCell& cell, CSVContainer& csvContainer
 
     cell.value = ApplyOperator(leftValue, rightValue, cellExprWithoutSpaces[opPos]);
     cell.isVisited = false;
-    //cout << "AFTER " << cellExprWithoutSpaces << endl;
 }
 
 ssize_t CSVCalculator::CalculateOperand(const string& operand, CSVContainer& csvContainer) {
